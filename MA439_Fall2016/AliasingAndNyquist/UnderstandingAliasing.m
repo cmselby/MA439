@@ -1,0 +1,134 @@
+%A setting.  By setting orig =1, we will always plot the original signals
+%along with the samples.
+orig = 0;
+
+%First, let's make a "continuous" time array by choosing very small time step:
+torig=0:.01:1;
+forig=sin(32*pi*torig);
+gorig=sin(8*pi*torig);
+%To make multiple plots on same axes I will use "hold"
+figure, hold
+%Going to plot f in red:
+plot(torig, forig, 'r');
+%Going to plot g in green:
+plot(torig, gorig, 'g');
+title('Continuous Signals')
+
+
+%Now for #2
+%a. N=6:
+t=0:1/6:1;
+f=sin(32*pi*t);
+g=sin(8*pi*t);
+%To make multiple plots on same axes I will use "hold"
+figure, hold
+if orig ==1
+    plot(torig, forig, 'r');
+    %Going to plot g in green:
+    plot(torig, gorig, 'g');
+end
+%Going to plot f in red:
+plot(t, f, 'r*');
+%Going to plot g in green:
+plot(t, g, 'go');
+title('N=6 samples per second')
+
+
+%b. N=4:
+t=0:1/4:1;
+f=sin(32*pi*t);
+g=sin(8*pi*t);
+%To make multiple plots on same axes I will use "hold"
+figure, hold
+if orig ==1
+    plot(torig, forig, 'r');
+    %Going to plot g in green:
+    plot(torig, gorig, 'g');
+end
+%Going to plot f in red:
+plot(t, f, 'r*');
+%Going to plot g in green:
+plot(t, g, 'go');
+%Going to explictly make range t in [0,1], f, g in [-1,1]
+axis([0 1 -1 1]);
+title('N=4 samples per second')
+
+%c. N=3:
+t=0:1/3:1;
+f=sin(32*pi*t);
+g=sin(8*pi*t);
+%To make multiple plots on same axes I will use "hold"
+figure, hold
+if orig ==1
+    plot(torig, forig, 'r');
+    %Going to plot g in green:
+    plot(torig, gorig, 'g');
+end
+%Going to plot f in red:
+plot(t, f, 'r*');
+%Going to plot g in green:
+plot(t, g, 'go');
+title('N=3 samples per second')
+
+%d. N=12:
+t=0:1/12:1;
+f=sin(32*pi*t);
+g=sin(8*pi*t);
+%To make multiple plots on same axes I will use "hold"
+figure, hold
+if orig ==1
+    plot(torig, forig, 'r');
+    %Going to plot g in green:
+    plot(torig, gorig, 'g');
+end
+%Going to plot f in red:
+plot(t, f, 'r*');
+%Going to plot g in green:
+plot(t, g, 'go');
+title('N=12 samples per second')
+
+
+%So what's the problem??
+% f is a waveform with frequency 16 Hz and g is a waveform with frequency 4
+% Hz.  We observe:  16-4 = 12 = m*N for (m=2, N=6), (m=3, N=4), (m=4, N=3),
+% (m=1, N=12).  We saw if q_1-q_2 = mN then aliasing happens!  
+
+%3.  We need to have N>=2f to guarantee no aliasing.  Since we are concerned with
+% frequencies of 4 and 16 we should choose the larger frequency, f=16 and let N >=2*16=32 in
+% order to guarantee aliasing won't happen.  Let's use N=36.
+
+t=0:1/36:1;
+f=sin(32*pi*t);
+g=sin(8*pi*t);
+%To make multiple plots on same axes I will use "hold"
+figure, hold
+if orig ==1
+    plot(torig, forig, 'r');
+    %Going to plot g in green:
+    plot(torig, gorig, 'g');
+end
+%Going to plot f in red:
+plot(t, f, 'r*');
+%Going to plot g in green:
+plot(t, g, 'go');
+title('N=36 samples per second')
+
+%Note that aliasing MAY not happen for sample rates smaller than the Nyquist 
+%frequency, but we’re not guaranteed it!
+
+t=0:1/18:1;
+f=sin(32*pi*t);
+g=sin(8*pi*t);
+%To make multiple plots on same axes I will use "hold"
+figure, hold
+if orig ==1
+    plot(torig, forig, 'r');
+    %Going to plot g in green:
+    plot(torig, gorig, 'g');
+end
+%Going to plot f in red:
+plot(t, f, 'r*');
+%Going to plot g in green:
+plot(t, g, 'go');
+title('N=16 samples per second')
+
